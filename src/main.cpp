@@ -29,8 +29,8 @@
 
 #include "wlan.h"
 
-int main() {
-
+int main()
+{
     stdio_init_all();
     stdio_usb_connected();
 

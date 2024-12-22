@@ -26,8 +26,8 @@
 
 #include "config.h"
 
-bool wlanInitialize() {
-
+bool wlanInitialize()
+{
     // Initialize the Wi-Fi hardware
     printf("Initializing Wi-Fi hardware...");
     if (cyw43_arch_init()) {

@@ -1,3 +1,6 @@
 AlignAfterOpenBracket: BlockIndent
 BinPackArguments: false
+BraceWrapping:
+  AfterFunction: true
+BreakBeforeBraces: Custom
 IndentWidth: 4
