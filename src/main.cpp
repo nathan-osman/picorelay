@@ -27,7 +27,7 @@
 #include "pico/cyw43_arch.h"
 #include "pico/stdlib.h"
 
-#include "init.h"
+#include "wlan.h"
 
 int main() {
 
@@ -39,7 +39,7 @@ int main() {
     printf("└───────────┘\n\n");
     printf("Booting...\n");
 
-    if (!initializeWlan()) {
+    if (!wlanInitialize()) {
         return 1;
     }
 }

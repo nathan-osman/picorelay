@@ -22,9 +22,40 @@
  * IN THE SOFTWARE.
  */
 
-#ifndef INIT_H
-#define INIT_H
+#include "pico/cyw43_arch.h"
 
-bool initializeWlan();
+#include "config.h"
 
-#endif // INIT_H
+bool wlanInitialize() {
+
+    // Initialize the Wi-Fi hardware
+    printf("Initializing Wi-Fi hardware...");
+    if (cyw43_arch_init()) {
+        printf("ERROR: failed to initialize Wi-Fi hardware\n");
+        return false;
+    }
+
+    // Enable station mode
+    cyw43_arch_enable_sta_mode();
+
+    // Attempt to connect to the network
+    printf("Connecting to %s...\n", WLAN_SSID);
+    if (cyw43_arch_wifi_connect_timeout_ms(
+            WLAN_SSID, WLAN_PSK, CYW43_AUTH_WPA2_AES_PSK, WLAN_TIMEOUT
+        )) {
+        printf("ERROR: failed to connect within timeout\n");
+        return false;
+    }
+
+    // Print the human-readable IP address
+    uint8_t *ip_address = (uint8_t *)&(cyw43_state.netif[0].ip_addr.addr);
+    printf(
+        "Connected! Obtained IP address %d.%d.%d.%d\n",
+        ip_address[0],
+        ip_address[1],
+        ip_address[2],
+        ip_address[3]
+    );
+
+    return true;
+}
