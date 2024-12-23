@@ -33,7 +33,6 @@
 int main()
 {
     stdio_init_all();
-    stdio_usb_connected();
 
     printf("┌───────────┐\n");
     printf("│ picorelay │\n");
