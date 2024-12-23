@@ -27,6 +27,7 @@
 
 #define WLAN_SSID "${WLAN_SSID}"
 #define WLAN_PSK "${WLAN_PSK}"
+#define WLAN_HOSTNAME "${WLAN_HOSTNAME}"
 #define WLAN_TIMEOUT ${WLAN_TIMEOUT}
 
 #endif // CONFIG_H

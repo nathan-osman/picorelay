@@ -33,6 +33,7 @@ pico_sdk_init()
 
 set(WLAN_SSID "" CACHE STRING "SSID for Wi-Fi connection")
 set(WLAN_PSK "" CACHE STRING "Password for Wi-Fi connection")
+set(WLAN_HOSTNAME "picorelay" CACHE STRING "Hostname for the Pico")
 set(WLAN_TIMEOUT 30000 CACHE STRING "Wi-Fi connect timeout in milliseconds")
 
 add_subdirectory(src)

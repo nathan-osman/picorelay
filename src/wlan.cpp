@@ -29,7 +29,7 @@
 bool wlanInitialize()
 {
     // Initialize the Wi-Fi hardware
-    printf("Initializing Wi-Fi hardware...");
+    printf("Initializing Wi-Fi hardware...\n");
     if (cyw43_arch_init()) {
         printf("ERROR: failed to initialize Wi-Fi hardware\n");
         return false;
@@ -37,6 +37,10 @@ bool wlanInitialize()
 
     // Enable station mode
     cyw43_arch_enable_sta_mode();
+
+    // Set the hostname
+    printf("Setting hostname to \"%s\"\n", WLAN_HOSTNAME);
+    netif_set_hostname(&cyw43_state.netif[0], WLAN_HOSTNAME);
 
     // Attempt to connect to the network
     printf("Connecting to %s...\n", WLAN_SSID);
@@ -48,13 +52,9 @@ bool wlanInitialize()
     }
 
     // Print the human-readable IP address
-    uint8_t *ip_address = (uint8_t *)&(cyw43_state.netif[0].ip_addr.addr);
     printf(
-        "Connected! Obtained IP address %d.%d.%d.%d\n",
-        ip_address[0],
-        ip_address[1],
-        ip_address[2],
-        ip_address[3]
+        "Connected! Obtained IP address %s\n",
+        ipaddr_ntoa(&cyw43_state.netif[0].ip_addr)
     );
 
     return true;
