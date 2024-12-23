@@ -22,31 +22,9 @@
  * IN THE SOFTWARE.
  */
 
-#include <stdio.h>
+#ifndef NTP_H
+#define NTP_H
 
-#include "pico/cyw43_arch.h"
-#include "pico/stdlib.h"
+bool ntpSet();
 
-#include "ntp.h"
-#include "wlan.h"
-
-int main()
-{
-    stdio_init_all();
-    stdio_usb_connected();
-
-    printf("┌───────────┐\n");
-    printf("│ picorelay │\n");
-    printf("└───────────┘\n\n");
-    printf("Booting...\n");
-
-    if (!wlanInitialize()) {
-        return 1;
-    }
-
-    if (!ntpSet()) {
-        return 1;
-    }
-
-    return 0;
-}
+#endif // NTP_H

@@ -25,6 +25,8 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+#define NTP_SERVER "${NTP_SERVER}"
+
 #define WLAN_SSID "${WLAN_SSID}"
 #define WLAN_PSK "${WLAN_PSK}"
 #define WLAN_HOSTNAME "${WLAN_HOSTNAME}"

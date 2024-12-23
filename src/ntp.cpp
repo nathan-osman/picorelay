@@ -22,31 +22,49 @@
  * IN THE SOFTWARE.
  */
 
-#include <stdio.h>
-
+#include "lwip/dns.h"
+#include "lwip/udp.h"
 #include "pico/cyw43_arch.h"
-#include "pico/stdlib.h"
 
-#include "ntp.h"
-#include "wlan.h"
+#include "config.h"
 
-int main()
+static void ntpUdpRecvCallback(
+    void *arg,
+    struct udp_pcb *pcb,
+    struct pbuf *p,
+    const ip_addr_t *addr,
+    u16_t port
+)
 {
-    stdio_init_all();
-    stdio_usb_connected();
+    //...
+}
 
-    printf("┌───────────┐\n");
-    printf("│ picorelay │\n");
-    printf("└───────────┘\n\n");
-    printf("Booting...\n");
+static void ntpDnsFoundCallback(
+    const char *name, const ip_addr_t *ipaddr, void *callback_arg
+)
+{
+    if (ipaddr) {
+        printf("Resolved to %s\n", ipaddr_ntoa(ipaddr));
+    }
+}
 
-    if (!wlanInitialize()) {
-        return 1;
+bool ntpSet()
+{
+    // Create the pcb
+    struct udp_pcb *pcb = udp_new_ip_type(IPADDR_TYPE_ANY);
+    if (!pcb) {
+        printf("ERROR: failed to create pcb\n");
+        return false;
     }
 
-    if (!ntpSet()) {
-        return 1;
-    }
+    // Set the callback for receiving packets
+    udp_recv(pcb, ntpUdpRecvCallback, NULL);
 
-    return 0;
+    // Lookup the address of the NTP server
+    printf("Looking up %s...\n", NTP_SERVER);
+    cyw43_arch_lwip_begin();
+    int err = dns_gethostbyname(NTP_SERVER, NULL, ntpDnsFoundCallback, NULL);
+    cyw43_arch_lwip_end();
+
+    return true;
 }

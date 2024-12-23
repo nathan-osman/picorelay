@@ -31,6 +31,8 @@ project(picorelay C CXX ASM)
 # Initialise the Raspberry Pi Pico SDK
 pico_sdk_init()
 
+set(NTP_SERVER "pool.ntp.org" CACHE STRING "NTP server for looking up time")
+
 set(WLAN_SSID "" CACHE STRING "SSID for Wi-Fi connection")
 set(WLAN_PSK "" CACHE STRING "Password for Wi-Fi connection")
 set(WLAN_HOSTNAME "picorelay" CACHE STRING "Hostname for the Pico")
