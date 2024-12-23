@@ -44,11 +44,10 @@ bool wlanInitialize()
 
     // Attempt to connect to the network
     printf("Connecting to %s...\n", WLAN_SSID);
-    if (cyw43_arch_wifi_connect_timeout_ms(
-            WLAN_SSID, WLAN_PSK, CYW43_AUTH_WPA2_AES_PSK, WLAN_TIMEOUT
-        )) {
+    while (cyw43_arch_wifi_connect_timeout_ms(
+        WLAN_SSID, WLAN_PSK, CYW43_AUTH_WPA2_AES_PSK, WLAN_TIMEOUT
+    )) {
         printf("ERROR: failed to connect within timeout\n");
-        return false;
     }
 
     // Print the human-readable IP address
